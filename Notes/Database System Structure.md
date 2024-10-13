@@ -39,13 +39,23 @@
 **5 Concurrency Manager**
   This can be something like MVCC. It is important enough to warrant its own component because we want to separate our concerns.
 
-**6. Storage Engine**
+**6 Shard Manager**
+  This manages the portion of the database which is on this specific server. Large databases will have multiple servers, each of which have a shard.
+  **6.1 Cluster Manager**
+    If there are different servers each hosting a shard, they have to be communicated with.
+  **6.1 Replication Manager**
+    This is responsible for overseeing the process of copying and synchronizing data across multiple database instances or servers. 
+
+**7. Storage Engine**
   This is the core of the database and responsible for storing data. Because disk i/o is very expensive, the speed of the database will often be dependent on the speed of the storage engine.
-  **6.1 Disk Storage Manager**
+  **7.1 Disk Storage Manager**
     This part is responsible for reading from - and writing to - disk.
 
-  **6.2 Buffer Manager**
+  **7.2 Buffer Manager**
     Because we can't directly modify the disk without addressing the whole page, we use a buffer manager.
 
-  **6.3 Index Manager**
+  **7.3 Index Manager**
     Indexing is important for increasing efficiency and speed of our disk i/o.
+  
+**8 OS Interaction Layer**
+  This makes the actual system calls to store and read data.

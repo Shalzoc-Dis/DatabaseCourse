@@ -30,3 +30,6 @@
 
 # Page
   A disk drive is divided into sectors called pages. If we want to access information from the disk, we need to load the whole page into memory before we can perform any actions. We cannot directly process things on disk.
+
+# Shard
+  Since large databases need multiple servers to store everything, the data is split into parts called shards.
