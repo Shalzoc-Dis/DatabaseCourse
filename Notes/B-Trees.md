@@ -58,3 +58,27 @@ complexity is O(log_m n). If we had 100 child nodes, we would need three I/O ope
 | Unbalanced BST | 10^6   | 10^6   | 10^6   |
 | Sorted Array   | 20     | 10^6   | 10^6   |
 | B-tree         | 3      | 3      | 3      |
+
+# Structure
+In BST, each node has a kay and two child pointers. If the key is 20, for instance, the left child pointer could be pointing to all nodes less than 20. The other 
+could point to all more than 20.
+An M-tree can have several keys per node. This means we have to do more comparisons. For example, a node could have 10, 20, 30 as keys. 10 might point to keys from 
+1 to 10. Now, we not only have to compare if our input is greater or less than one key value, we have to do more comparisons.
+The reason this can be more efficient is because our primary cost is reading data into RAM. Comparisons are fast by comparison. So, if we can be more accurate and 
+avoid reading more unnecessary data by doing a few more comparisons, this is often worth it.
+Furthermore, we have to retrieve disk data one file block at a time. We might as well store as many keys in a node as possible because we get the whole file block 
+anyway.
+
+#B-Tree Characteristics
+A B-tree of order m can have at most m children and m-1 keys. Each key separates two sub-trees, so each child pointer is "in between" each key.
+The minimum number of keys any node other than the root can have is ceil(m/2). The root has a minimum of 1 key.
+It is important that all the leaves are at the same level. If this is true and the root node has m keys, each layer can have an additional factor of m keys. 
+Therefore, if the leaf layer has x keys, the one before will have x/m keys, the one before will have x/m^2 keys, etc.
+If the total number of keys we have to accommodate is n, the height of the tree is given by log_n m.
+
+A B-tree grows towards the root. If a key is added and a node can't accept it, a new node is created next to it and one is created above them. This makes it very easy 
+to grow and shrink the number of entries. This essentially ensures that we have the fewest index tables as possible.
+
+#Differences Between B-Trees and B+ Trees
+A B+ tree has some redundant data. Namely, all keys can be found in the leaf nodes and all leaf nodes are connected together in a linked list. This is important 
+should there be lots of range based queries. Instead of searching through the branches of a B-tree, we can just jump from leaf to leaf, saving time.
